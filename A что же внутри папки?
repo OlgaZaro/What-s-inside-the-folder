@@ -1,0 +1,28 @@
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Scanner;
+
+
+public class Solution {
+
+    private static final String THIS_IS_FILE = " - это файл";
+    private static final String THIS_IS_DIR = " - это директория";
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);//считываем с клавиатуры пути к директориям и файлам
+        Path directory = Path.of(scanner.nextLine());
+        
+        try(DirectoryStream<Path> files = Files.newDirectoryStream(directory))//Получаем объект со списком файлов
+        {
+        for (Path path : files)//Цикл по списку файлов
+            if (Files.isRegularFile(path)) {//если путь к файлу - это файл
+                System.out.println(path + THIS_IS_FILE);
+            }
+                else if (Files.isDirectory(path)) {////если путь к файлу - это директория
+                    System.out.println(path + THIS_IS_DIR);
+                }
+            }
+        }
+    }
